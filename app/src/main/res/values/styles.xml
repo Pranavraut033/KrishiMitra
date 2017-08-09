@@ -1,0 +1,31 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="dButton" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_margin">@dimen/dPadding</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="dTextMenu" parent="Base.TextAppearance.AppCompat.Body2">
+        <item name="android:padding">@dimen/dPadding</item>
+        <item name="android:drawablePadding">@dimen/dPadding</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/cardview_light_background</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/dPadding</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

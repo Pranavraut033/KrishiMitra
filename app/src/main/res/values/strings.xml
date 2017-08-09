@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Krishi Mitra</string>
+    <string name="title_activity_login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="not_a_user">Not a user?</string>
+    <string name="email">Email</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="register">New User</string>
+    <string name="done">Done</string>
+    <string name="full_name">Full Name</string>
+    <string name="remember_me">Remember me</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="reg">Register</string>
+    <string name="forget">Forget?</string>
+    <string name="your_ads">Your Ads</string>
+    <string name="browse_ads">Browse Ads</string>
+    <string name="create_new_ad">Create New Ad</string>
+    <string name="add_photos">Add Photos</string>
+    <string name="title">Product Name</string>
+    <string name="address">Address</string>
+    <string name="price">Price</string>
+    <string name="description">Description</string>
+    <string name="photos">Photos</string>
+    <string name="details">Details</string>
+    <string name="login_in">Login in</string>
+</resources>
