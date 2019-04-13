@@ -1,110 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".LoginActivity">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="192dp"
+        android:orientation="vertical">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_scrollFlags="enterAlwaysCollapsed"
+            app:toolbarId="@+id/toolbar">
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:title="@string/title_activity_login"
+                app:titleTextColor="@color/white" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/aPadding"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
+        <ProgressBar
+            android:id="@+id/login_progressbar"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="-7dp"
+            android:alpha="0"
+            android:indeterminate="true" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <android.support.design.widget.TextInputLayout
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/scrollingBehaviour">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <pranav.views.TextField.TextField
+                android:id="@+id/login_email_field"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                app:hint="@string/textfield_label_email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textFieldColor="@color/colorPrimary"
+                app:textFieldStyle="outline" />
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/username"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/t1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dPad"
+                android:hint="@string/textfield_label_password"
+                app:boxStrokeColor="@color/colorPrimary"
+                app:hintTextColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="@+id/login_email_field"
+                app:layout_constraintStart_toStartOf="@+id/login_email_field"
+                app:layout_constraintTop_toBottomOf="@+id/login_email_field">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_password_field"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/username"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
-
-            <CheckBox
-                android:id="@+id/rem_me"
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dPadding"
-                android:text="@string/remember_me" />
+                android:layout_marginStart="@dimen/dPad"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="@dimen/dPad"
+                android:text="@string/content_ok"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/t1" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signup_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/pad32dp"
+                android:layout_marginTop="@dimen/pad32dp"
+                android:layout_marginEnd="@dimen/pad32dp"
+                android:onClick="clickListener"
+                android:text="@string/login_signup_btn_label"
+                android:textAllCaps="false"
+                app:icon="@drawable/ic_email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-                <Button
-                    android:id="@+id/reg_button"
-                    style="@style/dButton"
-                    android:layout_width="wrap_content"
-                    android:onClick="clicks"
-                    android:text="@string/not_a_user" />
-                <Button
-                    android:background="@color/colorAccent"
-                    android:id="@+id/fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/login_in"
-                    android:textColor="@color/cardview_light_background"
-                    android:textAllCaps="false"
-                    android:layout_margin="12dp"
-                    android:onClick="clicks" />
-                <Button
-                    android:id="@+id/for_button"
-                    style="@style/dButton"
-                    android:layout_width="wrap_content"
-                    android:onClick="clicks"
-                    android:text="@string/forget"
-                    android:textColor="#aa000000"
-                    android:visibility="gone" />
-            </LinearLayout>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/google_signin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:onClick="clickListener"
+                app:buttonSize="wide"
+                app:layout_constraintEnd_toEndOf="@id/signup_btn"
+                app:layout_constraintStart_toStartOf="@id/signup_btn"
+                app:layout_constraintTop_toBottomOf="@id/signup_btn" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
-</android.support.design.widget.CoordinatorLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/signin_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/pad16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="clickListener"
+        app:srcCompat="@drawable/ic_next"
+        app:useCompatPadding="true" />
+
+    <FrameLayout
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#A6676767"
+        android:onClick="clickListener"
+        android:visibility="gone">
+
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

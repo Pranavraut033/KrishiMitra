@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            app:title="@string/title_activity_post"
+            app:titleTextColor="@color/white" />
+
+        <ProgressBar
+            android:id="@+id/main_progressbar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:layout_marginBottom="-6dp"
+            android:alpha="0"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            android:padding="0dp" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/scrollingBehaviour">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <pranav.views.TextField.TextField
+                android:id="@+id/title_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                app:hint="Title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textFieldStyle="outline" />
+
+            <pranav.views.TextField.TextField
+                android:id="@+id/description_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:helperText="Describe the product as briefly as possible"
+                app:hint="Description"
+                app:inputType="textMultiLine"
+                app:layout_constraintEnd_toEndOf="@+id/title_field"
+                app:layout_constraintStart_toStartOf="@+id/title_field"
+                app:layout_constraintTop_toBottomOf="@+id/title_field"
+                app:minLines="3"
+                app:singleLine="false" />
+
+            <pranav.views.TextField.TextField
+                android:id="@+id/category_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:hint="Category"
+                app:layout_constraintEnd_toStartOf="@+id/price_field"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="@+id/description_field"
+                app:layout_constraintTop_toBottomOf="@+id/description_field" />
+
+            <pranav.views.TextField.TextField
+                android:id="@+id/price_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:hint="Price"
+                app:inputType="number"
+                app:layout_constraintEnd_toEndOf="@+id/description_field"
+                app:layout_constraintHorizontal_weight=".8"
+                app:layout_constraintStart_toEndOf="@+id/category_field"
+                app:layout_constraintTop_toTopOf="@+id/category_field" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/post_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dPad"
+                android:layout_marginEnd="@dimen/dPad"
+                android:layout_marginBottom="@dimen/dPad"
+                android:onClick="clickListener"
+                android:text="@string/post_button_text"
+                app:layout_constraintEnd_toEndOf="@+id/title_field"
+                app:layout_constraintTop_toBottomOf="@+id/price_field" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#A6676767"
+        android:onClick="clickListener"
+        android:visibility="gone" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

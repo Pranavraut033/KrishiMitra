@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "390312005650",
+    "firebase_url": "https://krishimitra-ccd78.firebaseio.com",
+    "project_id": "krishimitra-ccd78",
+    "storage_bucket": "krishimitra-ccd78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390312005650:android:754779360c952ef7",
+        "android_client_info": {
+          "package_name": "com.pranav.raut.apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390312005650-rkp0mrcp07a4cd6ds9ab0ocd7mcmse1d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pranav.raut.apps",
+            "certificate_hash": "a32395154d8e4f8097a8fc67630aadd159094125"
+          }
+        },
+        {
+          "client_id": "390312005650-kpcabja1rtk1t4o903q3dmh2thqvhls5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3rBYOTQnbzzveGnjOQ59-FKICr6uyFs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390312005650-kpcabja1rtk1t4o903q3dmh2thqvhls5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

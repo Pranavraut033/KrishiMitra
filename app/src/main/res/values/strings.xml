@@ -1,27 +1,44 @@
 <resources>
     <string name="app_name">Krishi Mitra</string>
-    <string name="title_activity_login">Login</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="not_a_user">Not a user?</string>
-    <string name="email">Email</string>
-    <string name="mobile_number">Mobile Number</string>
-    <string name="register">New User</string>
-    <string name="done">Done</string>
-    <string name="full_name">Full Name</string>
-    <string name="remember_me">Remember me</string>
-    <string name="edit_details">Edit Details</string>
-    <string name="reg">Register</string>
-    <string name="forget">Forget?</string>
-    <string name="your_ads">Your Ads</string>
-    <string name="browse_ads">Browse Ads</string>
-    <string name="create_new_ad">Create New Ad</string>
-    <string name="add_photos">Add Photos</string>
-    <string name="title">Product Name</string>
-    <string name="address">Address</string>
-    <string name="price">Price</string>
-    <string name="description">Description</string>
-    <string name="photos">Photos</string>
-    <string name="details">Details</string>
-    <string name="login_in">Login in</string>
+
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="scrollingBehaviour">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="textfield_label_email">Email</string>
+    <string name="content_ok">- OR -</string>
+    <string name="textfield_label_password">Password</string>
+    <string name="submit">Submit</string>
+    <string name="title_activity_register">Register</string>
+    <string name="textfield_label_first_name">First Name</string>
+    <string name="textfield_label_last_name">Last Name</string>
+    <string name="login_signup_btn_label">Sign up with email</string>
+    <string name="error_email_exists">Email already exists!</string>
+    <string name="error_email_not_found">No account is associated with this email</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_explore">Explore</string>
+    <string name="title_bookmark">Bookmarks</string>
+    <string name="title_profile">Profile</string>
+    <string name="menu_search_title">Search</string>
+    <string name="title_activity_post">Post Ad</string>
+    <string name="post_button_text">Post</string>
+    <string name="post_success_message">Successfully posted</string>
+    <string name="post_error_message">Something Went Wrong</string>
+    <string name="title_history">Orders</string>
+
 </resources>
