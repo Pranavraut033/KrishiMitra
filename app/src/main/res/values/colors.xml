@@ -8,8 +8,10 @@
     <color name="backgroundSetup">#A5D6A7</color>
 
     <!-- Utilities color -->
-    <color name="background_light">#f1f1f1</color>
+    <color name="background_light">#eee</color>
     <color name="background_dark">#212121</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="muted">#676767</color>
+    <color name="money">#81C784</color>
 </resources>

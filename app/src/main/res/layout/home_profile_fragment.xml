@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,37 +12,122 @@
         android:orientation="vertical">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
             android:layout_weight="1"
-            app:contentScrim="@color/white"
+            android:layout_height="0dp"
             app:expandedTitleTextAppearance="@style/AppTheme.Component.Inverse.Actionbar.Expanded"
-            app:layout_scrollFlags="noScroll|scroll|exitUntilCollapsed|enterAlways"
-            app:toolbarId="@+id/toolbar">
+            app:layout_scrollFlags="noScroll">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="Profile"
-                app:titleTextColor="@color/white" />
+                tools:title="@tools:sample/full_names" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:layout_marginBottom="-6dp"
+            android:alpha="0"
+            android:indeterminate="true"
+            android:visibility="gone" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/dPad"
+        android:paddingBottom="@dimen/dPad"
         app:layout_behavior="@string/scrollingBehaviour">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Hello world" />
+                android:id="@+id/email_lbl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/averialibre_bold"
+                android:text="Email"
+                android:textColor="@color/muted"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="#424242"
+                android:textSize="14sp"
+                android:typeface="monospace"
+                app:layout_constraintEnd_toEndOf="@+id/email_lbl"
+                app:layout_constraintStart_toStartOf="@+id/email_lbl"
+                app:layout_constraintTop_toBottomOf="@+id/email_lbl"
+                tools:text="@tools:sample/full_names" />
+
+            <TextView
+                android:id="@+id/num_purchase_lbl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/averialibre_bold"
+                android:text="Number Of bookmarks"
+                android:textColor="@color/muted"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/email_lbl"
+                app:layout_constraintStart_toStartOf="@+id/email_lbl"
+                app:layout_constraintTop_toBottomOf="@+id/email" />
+
+            <TextView
+                android:id="@+id/num_bookmarks"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="#424242"
+                android:textSize="14sp"
+                android:typeface="monospace"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/num_purchase_lbl"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/num_purchase_lbl"
+                app:layout_constraintTop_toBottomOf="@+id/num_purchase_lbl"
+                tools:text="@tools:sample/us_zipcodes" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logout_btn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/pad32dp"
+        android:layout_marginRight="@dimen/pad32dp"
+        android:layout_marginBottom="@dimen/dPad"
+        android:height="54dp"
+        android:text="@string/log_out"
+        android:textColor="#E57373"
+        app:icon="@drawable/ic_exit"
+        app:iconTint="#E57373"
+        app:rippleColor="#23E57373"
+        app:strokeColor="#E57373"
+        app:strokeWidth="4dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

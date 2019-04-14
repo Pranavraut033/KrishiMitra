@@ -40,5 +40,13 @@
     <string name="post_success_message">Successfully posted</string>
     <string name="post_error_message">Something Went Wrong</string>
     <string name="title_history">Orders</string>
+    <string name="attach_image_btn_text">Add Image</string>
+    <string name="buy_btn_text">Buy</string>
+    <string name="replace_image">Replace Image</string>
+    <string name="post_photo">Post Photo</string>
+    <string name="sold_already">Sold Already</string>
+    <string name="log_out">Log out</string>
+    <string name="profile">Profile</string>
+    <string name="cant_buy">Published</string>
 
 </resources>

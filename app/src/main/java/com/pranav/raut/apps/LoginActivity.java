@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password)) {
             mPasswordField.setError(getString(R.string.error_field_required));
             focusView = mPasswordField;
             cancel = true;

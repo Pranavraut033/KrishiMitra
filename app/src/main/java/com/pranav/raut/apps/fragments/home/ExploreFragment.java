@@ -2,19 +2,35 @@ package com.pranav.raut.apps.fragments.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toolbar;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Source;
+import com.google.firebase.storage.FirebaseStorage;
 import com.pranav.raut.apps.PostActivity;
 import com.pranav.raut.apps.R;
+import com.pranav.raut.apps.adapters.PostListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import model.PostSchema;
+import pranav.lib.PaytmHelper;
+import pranav.utilities.Logger;
+import pranav.utilities.Utilities;
+import pranav.utils.StorageUtils;
+import pranav.utils.StoreUtils;
+
 
 /**
  * Created on 12-04-19 at 4:46 by Pranav Raut.
@@ -22,8 +38,13 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class ExploreFragment extends GFragment {
 
-    private View mParent;
-    private AppCompatActivity activity;
+    private static String TAG = "ExploreFragment";
+    private Logger mLogger = new Logger(true, TAG);
+
+    private SwipeRefreshLayout refreshLayout;
+    private RecyclerView mRecyclerView;
+    private ArrayList<PostSchema> posts = new ArrayList<>();
+    private PostListAdapter mAdapter;
 
     @Nullable
     @Override
@@ -32,15 +53,57 @@ public class ExploreFragment extends GFragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         mParent = inflater.inflate(R.layout.home_explore_fragment, container, false);
+
+        mRecyclerView = mParent.findViewById(R.id.main_list);
+        refreshLayout = mParent.findViewById(R.id.refresh_layout);
+        refreshLayout.setRefreshing(true);
+
         init();
         return mParent;
     }
 
-    private void init() {
-        activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            activity.setSupportActionBar(mParent.findViewById(R.id.toolbar));
+    @Override
+    protected void init() {
+        super.init();
+        activity.setSupportActionBar(mParent.findViewById(R.id.toolbar));
+    }
+
+    @Override
+    protected void gotUser() {
+        PaytmHelper paytmHelpher = new PaytmHelper(activity);
+
+        mAdapter = new PostListAdapter(posts, paytmHelpher, mStorageUtils, mStoreUtils);
+        mAdapter.setUser(mUser);
+        Utilities.initRec(null, mRecyclerView);
+
+        mRecyclerView.setAdapter(mAdapter);
+        refreshLayout.setOnRefreshListener(() -> {
+            refreshLayout.setRefreshing(true);
+            mStoreUtils.collection("/posts", new StoreUtils.Condition[0],
+                    this::updateList, mLogger::w, Source.DEFAULT);
+        });
+
+        mStoreUtils.collection("/posts", new StoreUtils.Condition[0],
+                this::updateList, mLogger::w, Source.DEFAULT)
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    if (e == null) {
+                        if (queryDocumentSnapshots != null) {
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            updateList(list);
+                        }
+                    }
+                });
+    }
+
+    private void updateList(List<DocumentSnapshot> list) {
+        refreshLayout.setRefreshing(true);
+        posts.clear();
+        for (DocumentSnapshot snapshot : list) {
+            posts.add(new PostSchema(Objects.requireNonNull(snapshot.getData()), snapshot.getId()));
         }
+        mAdapter.notifyDataSetChanged();
+
+        refreshLayout.setRefreshing(false);
     }
 
     @Override

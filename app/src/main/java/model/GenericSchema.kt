@@ -23,4 +23,14 @@ abstract class GenericSchema {
 				successListener,
 				failureListener
 		)
+
+	fun <T : GenericSchema> update(
+			storeUtils: StoreUtils,
+			successListener: OnSuccessListener<Void>? = null,
+			failureListener: OnFailureListener? = null
+	): T = storeUtils.update(
+			this,
+			successListener,
+			failureListener
+	)
 }

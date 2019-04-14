@@ -26,6 +26,11 @@ class StoreUtils constructor(
 			failureListener: OnFailureListener? = null): T =
 			insertData(db, schema, successListener, failureListener, a)
 
+	fun <T : GenericSchema> update(
+			schema: GenericSchema,
+			successListener: OnSuccessListener<Void>? = null,
+			failureListener: OnFailureListener? = null): T =
+			update(db, schema, successListener, failureListener, a)
 
 	fun collection(collectionPath: String,
 				   vararg conditions: Condition,
@@ -83,6 +88,40 @@ class StoreUtils constructor(
 			return schema as T
 		}
 
+		fun <T : GenericSchema> update(
+				db: FirebaseFirestore = FirebaseFirestore.getInstance(),
+				schema: GenericSchema,
+				successListener: OnSuccessListener<Void>? = null,
+				failureListener: OnFailureListener? = null,
+				a: AppCompatActivity? = null
+		): T {
+			val task = db.collection(schema.collectionName).let {
+				if (TextUtils.isEmpty(schema.documentName)) {
+					it.document().let { ref ->
+						schema.documentName = ref.id
+						ref.set(schema.map)
+					}
+				} else it.document(schema.documentName!!).update(schema.map)
+			}
+
+			val l = OnCompleteListener<Void> { tk ->
+				if (tk.isSuccessful) {
+					tk.result
+					logger.d("Successfully updated, $schema!")
+					logger.v("Result: ${tk.result}")
+					successListener?.onSuccess(tk.result)
+				} else {
+					logger.w("Failed", e = tk.exception)
+					failureListener?.onFailure(tk.exception!!)
+				}
+			}
+			if (a == null) task.addOnCompleteListener(l)
+			else task.addOnCompleteListener(a, l)
+
+			@Suppress("UNCHECKED_CAST")
+			return schema as T
+		}
+
 		fun document(db: FirebaseFirestore = FirebaseFirestore.getInstance(),
 					 collectionPath: String,
 					 documentPath: String,
@@ -125,7 +164,7 @@ class StoreUtils constructor(
 							"<=" -> collectionRef.whereLessThanOrEqualTo(field, value)
 							"<" -> collectionRef.whereLessThan(field, value)
 							"in" -> collectionRef.whereArrayContains(field, value)
-							else -> throw Condition.SymbolNotFoundException()
+							else -> throw Condition.SymbolNotFoundException("'${it.symbol}'")
 						}
 					}
 					val task = collectionRef.get(source)

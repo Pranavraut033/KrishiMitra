@@ -21,7 +21,7 @@ data class UserSchema internal constructor(
 	var name: String by map
 	var phoneNumber: String? by map
 	var email: String by map
-	var bookmarks: List<String>? by map
+	var bookmarks: MutableList<String> by map
 
 	constructor(uid: String,
 				name: String,
@@ -34,8 +34,13 @@ data class UserSchema internal constructor(
 			"bookmarks" to listOf<String>()))
 
 
-	fun addBookmark(postUid: String): Nothing {
-		TODO("NOT YET IMPLEMENTED")
+	fun addBookmark(post: PostSchema): Boolean {
+		val postId = post.getId()!!
+		val i = bookmarks.indexOf(postId)
+		val b = i == -1;
+		if (b) bookmarks.add(postId)
+		else bookmarks.remove(postId)
+		return b
 	}
 
 	override fun toString(): String = "$name ($email)"

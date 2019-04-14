@@ -5,14 +5,16 @@
         android:id="@+id/navigation_explore"
         android:icon="@drawable/ic_explore"
         android:title="@string/title_explore" />
-    <item
-        android:id="@+id/orders"
-        android:icon="@drawable/ic_history"
-        android:title="@string/title_history" />
+
     <item
         android:id="@+id/navigation_bookmark"
         android:icon="@drawable/ic_bookmark"
         android:title="@string/title_bookmark" />
+
+    <item
+        android:id="@+id/navigation_orders"
+        android:icon="@drawable/ic_history"
+        android:title="@string/title_history" />
 
     <item
         android:id="@+id/navigation_profile"

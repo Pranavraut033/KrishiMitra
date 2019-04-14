@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pranav.raut.apps.fragments.home.BookmarkFragment;
 import com.pranav.raut.apps.fragments.home.ExploreFragment;
 import com.pranav.raut.apps.fragments.home.GFragment;
+import com.pranav.raut.apps.fragments.home.HistoryFragment;
 import com.pranav.raut.apps.fragments.home.ProfileFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,8 +26,10 @@ public class HomeActivity extends AppCompatActivity {
                 fragment = new ExploreFragment();
                 break;
             case R.id.navigation_bookmark:
-                fragment = null;
-
+                fragment = new BookmarkFragment();
+                break;
+            case R.id.navigation_orders:
+                fragment = new HistoryFragment();
                 break;
             case R.id.navigation_profile:
                 fragment = new ProfileFragment();
@@ -58,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadFragment(new ExploreFragment());
     }
+
 
     public void clickListener(View view) {
         if (currentFragment != null) currentFragment.onClick(view);
