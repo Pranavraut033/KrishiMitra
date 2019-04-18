@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
+import com.google.android.gms.common.SignInButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -35,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private AuthUtils mAuth;
     private Logger mLogger = new Logger(true, TAG);
     private RegexPatterns mPatterns = RegexPatterns.INSTANCE;
+    private AuthUtils.GoogleSigninUtils googleUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mEmailField = findViewById(R.id.login_email_field);
         mAuth = new AuthUtils(this, FirebaseAuth.getInstance(), true);
+        googleUtils = new AuthUtils.GoogleSigninUtils(this);
 
         mPasswordField = findViewById(R.id.login_password_field);
         mPasswordField.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -54,6 +59,55 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mProgressBar = findViewById(R.id.login_progressbar);
+        SignInButton button = findViewById(R.id.google_signin);
+        button.setOnClickListener(this::clickListener);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        @SuppressLint("StaticFieldLeak")
+        AsyncTask<Void, Void, LoginErrors> asyncTask = new AsyncTask<Void, Void, LoginErrors>() {
+            @Override
+            protected LoginErrors doInBackground(Void[] voids) {
+                AuthCredential credential = googleUtils.processResult(requestCode, resultCode, data);
+                if (credential != null)
+                    mAuth.signInWithCredential(
+                            credential,
+                            authResult -> onPostExecute(LoginErrors.NONE),
+                            mLogger::w
+                    );
+                else return LoginErrors.MISC;
+                return null;
+            }
+
+            @SuppressWarnings("ConstantConditions")
+            @Override
+            protected void onPostExecute(final LoginErrors success) {
+                if (success != null) {
+                    mAuthTask = null;
+                    showProgress(false);
+                    switch (success) {
+                        case NONE:
+                            Toast.makeText(
+                                    LoginActivity.this,
+                                    "Welcome, " + mAuth.getCurrentUser().getDisplayName(),
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            break;
+                        case MISC:
+                            Toast.makeText(
+                                    LoginActivity.this,
+                                    "Something went wrong",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                    }
+                }
+            }
+        };
+        asyncTask.execute();
     }
 
     private void attemptLogin() {
@@ -99,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void clickListener(View view) {
+        Log.d(TAG, "clickListener: " + view);
         switch (view.getId()) {
             case R.id.signin_btn:
                 attemptLogin();
@@ -107,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;
             case R.id.google_signin:
+                googleUtils.launch();
                 break;
             case R.id.bg:
                 break;
@@ -116,6 +172,7 @@ public class LoginActivity extends AppCompatActivity {
     enum LoginErrors {
         WRONG_PASSWORD,
         EMAIL_NOT_FOUND,
+        MISC,
         NONE
     }
 
@@ -147,6 +204,7 @@ public class LoginActivity extends AppCompatActivity {
             return null;
         }
 
+        @SuppressWarnings("ConstantConditions")
         @Override
         protected void onPostExecute(final LoginErrors success) {
             if (success != null) {

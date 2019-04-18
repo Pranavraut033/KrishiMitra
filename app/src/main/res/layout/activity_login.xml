@@ -111,7 +111,6 @@
                 android:id="@+id/google_signin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:onClick="clickListener"
                 app:buttonSize="wide"
                 app:layout_constraintEnd_toEndOf="@id/signup_btn"
                 app:layout_constraintStart_toStartOf="@id/signup_btn"

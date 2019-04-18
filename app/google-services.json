@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "390312005650-66br1t0e89ck7p5t676lu0kllnvgcsuv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pranav.raut.apps",
+            "certificate_hash": "89ba1562901d7e948081e0cf2217040bbf790bd3"
+          }
+        },
+        {
           "client_id": "390312005650-kpcabja1rtk1t4o903q3dmh2thqvhls5.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,7 +1,12 @@
 package pranav.utils
 
 import android.app.Activity
+import android.content.Intent
 import android.net.Uri
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -9,13 +14,16 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import pranav.utilities.Logger
 import java.util.concurrent.TimeUnit
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.AuthCredential
+
 
 /**
  * Created on 25-01-19 at 11:20 by Pranav Raut.
  * For ProVeteran
  */
 
-class AuthUtils constructor(private val a: Activity,
+class AuthUtils constructor(private val activity: Activity,
 							val auth: FirebaseAuth = FirebaseAuth.getInstance(),
 							verbose: Boolean = false, debug: Boolean = false) {
 	private val logger: Logger = Logger(verbose, debug, TAG)
@@ -39,7 +47,7 @@ class AuthUtils constructor(private val a: Activity,
 				failureListener?.onFailure(it.exception!!)
 			}
 		}
-		task.addOnCompleteListener(a, l)
+		task.addOnCompleteListener(activity, l)
 	}
 
 	fun signInUsingNumber(phoneNumber: String,
@@ -66,14 +74,14 @@ class AuthUtils constructor(private val a: Activity,
 		}
 
 		PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber, timeoutTime,
-				TimeUnit.MINUTES, a, callbacks)
+				TimeUnit.MINUTES, activity, callbacks)
 	}
 
 	fun createUserUsingEmail(email: String, password: String,
 							 successListener: OnSuccessListener<AuthResult>? = null,
 							 failureListener: OnFailureListener? = null) {
 		auth.createUserWithEmailAndPassword(email, password)
-				.addOnCompleteListener(a) { task ->
+				.addOnCompleteListener(activity) { task ->
 					if (task.isSuccessful) {
 						logger.d("User successfully Created!")
 						logger.v("Result: ${task.result}")
@@ -89,7 +97,7 @@ class AuthUtils constructor(private val a: Activity,
 	fun getLoginMethodsFor(email: String,
 						   onResultListener: OnResultListener<List<String>>? = null) {
 		auth.fetchSignInMethodsForEmail(email)
-				.addOnCompleteListener(a) { task ->
+				.addOnCompleteListener(activity) { task ->
 					val methods = task.result?.signInMethods
 
 					if (task.isSuccessful && task.result != null)
@@ -108,7 +116,7 @@ class AuthUtils constructor(private val a: Activity,
 						.setDisplayName(name)
 						.setPhotoUri(uri)
 						.build())
-				.addOnCompleteListener {
+				.addOnCompleteListener(activity) {
 					if (it.isSuccessful) {
 						logger.d("Profile updated successfully!")
 						successListener?.onSuccess(it.result)
@@ -119,6 +127,61 @@ class AuthUtils constructor(private val a: Activity,
 				}
 	}
 
+	fun signInWithCredential(
+			credential: AuthCredential,
+			successListener: OnSuccessListener<AuthResult>? = null,
+			failureListener: OnFailureListener? = null
+	) {
+		auth.signInWithCredential(credential)
+				.addOnCompleteListener(activity) {
+					if (it.isSuccessful) {
+						logger.d("Profile updated successfully!")
+						successListener?.onSuccess(it.result)
+					} else {
+						logger.w("Failed To update profile", e = it.exception)
+						failureListener?.onFailure(it.exception!!)
+					}
+				}
+	}
+
+	class GoogleSigninUtils(var activity: Activity) {
+
+		private var mGoogleSignInClient: GoogleSignInClient
+
+		init {
+			val gso = GoogleSignInOptions
+					.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+					.requestIdToken("390312005650-kpcabja1rtk1t4o903q3dmh2thqvhls5.apps.googleusercontent.com")
+					.requestEmail()
+					.build()
+			mGoogleSignInClient = GoogleSignIn.getClient(activity, gso)
+		}
+
+		fun launch() {
+			val signInIntent = mGoogleSignInClient.signInIntent
+			activity.startActivityForResult(signInIntent, RC_SIGN_IN)
+		}
+
+		fun processResult(requestCode: Int, resultCode: Int, data: Intent): AuthCredential? {
+			if (requestCode == RC_SIGN_IN) {
+				val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+				try {
+					val acc = task.getResult(ApiException::class.java)
+					if (acc != null) return GoogleAuthProvider.getCredential(acc.idToken, null)
+				} catch (e: ApiException) {
+					mLogger.w("Google sign in failed", e)
+				}
+			}
+			return null
+		}
+
+		companion object {
+			const val TAG = "GoogleSigninUtils"
+			const val RC_SIGN_IN = 123
+
+			val mLogger = Logger(true, TAG)
+		}
+	}
 	val currentUser: FirebaseUser?
 		get() = auth.currentUser
 
